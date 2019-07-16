@@ -106,16 +106,21 @@
 
 
 
-  <meta name="description" content="Keep Learning &amp; Recording!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码上行动GO">
-<meta property="og:url" content="https://fcbhank.github.io/archives/index.html">
+  <meta name="description" content="MySQL 可以恢复到半个月内任意一秒的状态，这是为什么？  mysql的更新语句与查询语句大体相同，但多了两个日志模块即redo log（重做日志）和binlog（归档日志） 一、redo log和binlog1、redo log模块（存储引擎层日志） WAL技术（Write-Ahead Logging）是InnoDB引擎先将“更新”写到redo log中并更新内存，这时候就算更新完毕了，等计">
+<meta name="keywords" content="mysql,日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql02| 从SQL更新语句看mysql日志系统">
+<meta property="og:url" content="https://fcbhank.github.io/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/index.html">
 <meta property="og:site_name" content="码上行动GO">
-<meta property="og:description" content="Keep Learning &amp; Recording!">
+<meta property="og:description" content="MySQL 可以恢复到半个月内任意一秒的状态，这是为什么？  mysql的更新语句与查询语句大体相同，但多了两个日志模块即redo log（重做日志）和binlog（归档日志） 一、redo log和binlog1、redo log模块（存储引擎层日志） WAL技术（Write-Ahead Logging）是InnoDB引擎先将“更新”写到redo log中并更新内存，这时候就算更新完毕了，等计">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/12808576-be8ef7012b01750e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/12808576-0abb4e0cd05d3b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-16T05:09:44.329Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码上行动GO">
-<meta name="twitter:description" content="Keep Learning &amp; Recording!">
+<meta name="twitter:title" content="Mysql02| 从SQL更新语句看mysql日志系统">
+<meta name="twitter:description" content="MySQL 可以恢复到半个月内任意一秒的状态，这是为什么？  mysql的更新语句与查询语句大体相同，但多了两个日志模块即redo log（重做日志）和binlog（归档日志） 一、redo log和binlog1、redo log模块（存储引擎层日志） WAL技术（Write-Ahead Logging）是InnoDB引擎先将“更新”写到redo log中并更新内存，这时候就算更新完毕了，等计">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/12808576-be8ef7012b01750e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -123,7 +128,7 @@
 
   
   
-  <link rel="canonical" href="https://fcbhank.github.io/archives/">
+  <link rel="canonical" href="https://fcbhank.github.io/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/">
 
 
 
@@ -133,7 +138,7 @@
   };
 </script>
 
-  <title>归档 | 码上行动GO</title>
+  <title>Mysql02| 从SQL更新语句看mysql日志系统 | 码上行动GO</title>
   
 
 
@@ -181,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -271,7 +276,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -337,416 +342,288 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fcbhank.github.io/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content="Keep Learning & Recording!">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上行动GO">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Mysql02| 从SQL更新语句看mysql日志系统
+
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+
           
-        
-        嗯..! 目前共计 10 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+          
 
-        
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+              
+                
+              
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/" itemprop="url">
+              <time title="创建时间：2019-05-12 19:10:16" itemprop="dateCreated datePublished" datetime="2019-05-12T19:10:16+08:00">2019-05-12</time>
+            </span>
+          
+
+          
             
-              <span itemprop="name">Mysql02| 从SQL更新语句看mysql日志系统</span>
+
             
-          </a>
-        
-      </h2>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-16 13:09:44" itemprop="dateModified" datetime="2019-07-16T13:09:44+08:00">2019-07-16</time>
+              </span>
+            
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-12T19:10:16+08:00" content="2019-05-12">
-          05-12
-        </time>
-      </div>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Mysql学习实录/" itemprop="url" rel="index"><span itemprop="name">Mysql学习实录</span></a></span>
 
-    </header>
-  </article>
+                
+                
+              
+            </span>
+          
 
+          
+            
+            
+          
 
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">881</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">1 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/05/12/Mysql01-从SQL语句执行过程看mysql架构/" itemprop="url">
-            
-              <span itemprop="name">Mysql01| 从SQL语句执行过程看mysql架构</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-12T18:11:48+08:00" content="2019-05-12">
-          05-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/05/12/Mysql34-Join-用法记录/" itemprop="url">
-            
-              <span itemprop="name">Mysql34--Join 用法记录</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-12T16:12:02+08:00" content="2019-05-12">
-          05-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <blockquote>
+<p>MySQL 可以恢复到半个月内任意一秒的状态，这是为什么？</p>
+</blockquote>
+<p>mysql的更新语句与查询语句大体相同，但多了两个日志模块即redo log（重做日志）和binlog（归档日志）</p>
+<h2 id="一、redo-log和binlog"><a href="#一、redo-log和binlog" class="headerlink" title="一、redo log和binlog"></a>一、redo log和binlog</h2><h3 id="1、redo-log模块（存储引擎层日志）"><a href="#1、redo-log模块（存储引擎层日志）" class="headerlink" title="1、redo log模块（存储引擎层日志）"></a>1、redo log模块（存储引擎层日志）</h3><ul>
+<li>WAL技术（Write-Ahead Logging）是InnoDB引擎先将“更新”写到redo log中并更新内存，这时候就算更新完毕了，等计算机“空闲”时再写入硬盘当中。</li>
+<li>其中redo log是有固定大小的，等被写满时就不得不写入硬盘中了。也正因为有redo log的存在，所以在mysql发生异常重启后，InnoDB就可以记录不丢失，该能力被称为crash-safe。<br><img src="http://upload-images.jianshu.io/upload_images/12808576-be8ef7012b01750e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></li>
+</ul>
+<h3 id="2、binlog日志模块（server层日志）"><a href="#2、binlog日志模块（server层日志）" class="headerlink" title="2、binlog日志模块（server层日志）"></a>2、binlog日志模块（server层日志）</h3><h3 id="3、两个日志模块联系与差异"><a href="#3、两个日志模块联系与差异" class="headerlink" title="3、两个日志模块联系与差异"></a>3、两个日志模块联系与差异</h3><blockquote>
+<p>mysql5.5.5以前默认使用自带的MyISAM引擎，该引擎没有crash-safe能力，只能依靠MyISAM进行归档；在 5.5.5 版本后使用InnoDB作为默认存储引擎。</p>
+</blockquote>
+<h4 id="差异处："><a href="#差异处：" class="headerlink" title="差异处："></a>差异处：</h4><ol>
+<li>redo log是InnoDB特有的，而binlog位于server层，所有引擎都可以使用；</li>
+<li>redo log是物理日志，记录了在实际物理位置进行的操作；binlog是逻辑日志，记录的是执行语句的原始逻辑；</li>
+<li>redo log是循环写，固定大小会被写完；binlog是追加写，写到一定大小切换到下一个，不覆盖以往内容。</li>
+</ol>
+<h2 id="二、update语句执行流程"><a href="#二、update语句执行流程" class="headerlink" title="二、update语句执行流程"></a>二、update语句执行流程</h2><p><strong>注</strong>：下图中<em>浅色</em>在InnoDB中进行，<em>深色</em>在执行器中完成。<br><img src="http://upload-images.jianshu.io/upload_images/12808576-0abb4e0cd05d3b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="via 极客时间"><br>由上图可知，InnoDB中的操作被分成了两阶段提交，之所以要这样做，是因为只有一步的话，会导致一句日志回复的数据库状态与原数据库状态不同，这样在数据库发生崩溃和扩容时都带来巨大问题。这样做了可以保证redo log和binlog的逻辑一致。</p>
+<p><strong>tips</strong>:可以将mysql参数innodb_flush_log_at_trx_commit和sync_binlog这两个参数设为1，这样能保证数据库异常重启后物理日志和逻辑日志都不会丢失，因为已经被写到磁盘当中了。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/05/08/翻译-Github-Authorizing-OAuth-Apps/" itemprop="url">
-            
-              <span itemprop="name">翻译| Github: Authorizing OAuth Apps</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-08T11:44:41+08:00" content="2019-05-08">
-          05-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/09/03-计算机网络相关知识/" itemprop="url">
-            
-              <span itemprop="name">03| 计算机网络相关知识</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-09T09:39:58+08:00" content="2019-04-09">
-          04-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/01/Linux常用命令/" itemprop="url">
-            
-              <span itemprop="name">Linux常用命令</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-01T23:21:00+08:00" content="2019-04-01">
-          04-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/31/继承Thread类和实现Runnable接口法的异同/" itemprop="url">
-            
-              <span itemprop="name">继承Thread类和实现Runnable接口法的异同</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-31T18:57:29+08:00" content="2019-03-31">
-          03-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/29/02-操作系统相关知识/" itemprop="url">
-            
-              <span itemprop="name">02| 操作系统相关知识</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-29T10:46:31+08:00" content="2019-03-29">
-          03-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/28/01-职业未来发展/" itemprop="url">
-            
-              <span itemprop="name">01| 职业未来发展</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-28T19:49:43+08:00" content="2019-03-28">
-          03-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/03/27/00| 构建能力框架/" itemprop="url">
-            
-              <span itemprop="name">00| 前言：构建能力框架</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-27T19:45:51+08:00" content="2019-03-27">
-          03-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://fcbhank.github.io/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/" title="Mysql02| 从SQL更新语句看mysql日志系统">https://fcbhank.github.io/2019/05/12/Mysql02-从SQL更新语句看mysql日志系统/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/日志/" rel="tag"># 日志</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/12/Mysql01-从SQL语句执行过程看mysql架构/" rel="next" title="Mysql01| 从SQL语句执行过程看mysql架构">
+                <i class="fa fa-chevron-left"></i> Mysql01| 从SQL语句执行过程看mysql架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -766,8 +643,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -880,6 +766,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、redo-log和binlog"><span class="nav-number">1.</span> <span class="nav-text">一、redo log和binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、redo-log模块（存储引擎层日志）"><span class="nav-number">1.1.</span> <span class="nav-text">1、redo log模块（存储引擎层日志）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、binlog日志模块（server层日志）"><span class="nav-number">1.2.</span> <span class="nav-text">2、binlog日志模块（server层日志）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、两个日志模块联系与差异"><span class="nav-number">1.3.</span> <span class="nav-text">3、两个日志模块联系与差异</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#差异处："><span class="nav-number">1.3.1.</span> <span class="nav-text">差异处：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、update语句执行流程"><span class="nav-number">2.</span> <span class="nav-text">二、update语句执行流程</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1088,6 +991,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -1101,6 +1008,8 @@
 
   
 
+
+  
 
 
   
