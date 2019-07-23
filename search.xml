@@ -25,7 +25,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Mysql34--Join用法记录]]></title>
+    <title><![CDATA[Mysql34| Join用法记录]]></title>
     <url>%2F2019%2F05%2F12%2FMysql34-Join%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95%2F</url>
     <content type="text"><![CDATA[如果可以使用被驱动表的索引，join要优于单表查询 ； 不能使用被驱动表的索引，只能用Block Nested-Loop join算法，这样的SQL语句应当弃用； 在使用join时，应当让运行中数据量小的表作为驱动表。]]></content>
       <categories>
