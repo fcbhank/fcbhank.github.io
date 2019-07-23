@@ -106,18 +106,18 @@
 
 
 
-  <meta name="description" content="如果可以使用被驱动表的索引，join要优于单表查询  ； 不能使用被驱动表的索引，只能用Block Nested-Loop join算法，这样的SQL语句应当弃用； 在使用join时，应当让运行中数据量小的表作为驱动表。">
-<meta name="keywords" content="Mysql,Join">
+  <meta name="description" content="Java技术目前应用广泛，工作求职者众多，取得高薪报酬是码农自身水平的直接体现，这里将Java求职中需要掌握的内容分为以下3个部分。  1. 基础部分 技术岗位与面试流程 计算机基础 JVM原理 多线程 设计模式 数据结构与算法2. 应用部分 常用工具集 常用框架 缓存 队列 数据库3. 综合部分 系统架构设计 微服务架构 容器化   找工作面对的3个问题 如何准备简历？ 简历直接决定着求职者能">
+<meta name="keywords" content="Java,职业发展">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql34--Join 用法记录">
-<meta property="og:url" content="https://fcbhank.github.io/2019/05/12/Mysql34-Join-用法记录/index.html">
+<meta property="og:title" content="00| 前言：构建能力框架">
+<meta property="og:url" content="https://fcbhank.github.io/2019/03/27/00-构建能力框架/index.html">
 <meta property="og:site_name" content="码上行动GO">
-<meta property="og:description" content="如果可以使用被驱动表的索引，join要优于单表查询  ； 不能使用被驱动表的索引，只能用Block Nested-Loop join算法，这样的SQL语句应当弃用； 在使用join时，应当让运行中数据量小的表作为驱动表。">
+<meta property="og:description" content="Java技术目前应用广泛，工作求职者众多，取得高薪报酬是码农自身水平的直接体现，这里将Java求职中需要掌握的内容分为以下3个部分。  1. 基础部分 技术岗位与面试流程 计算机基础 JVM原理 多线程 设计模式 数据结构与算法2. 应用部分 常用工具集 常用框架 缓存 队列 数据库3. 综合部分 系统架构设计 微服务架构 容器化   找工作面对的3个问题 如何准备简历？ 简历直接决定着求职者能">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-16T05:14:24.850Z">
+<meta property="og:updated_time" content="2019-07-23T11:11:53.268Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mysql34--Join 用法记录">
-<meta name="twitter:description" content="如果可以使用被驱动表的索引，join要优于单表查询  ； 不能使用被驱动表的索引，只能用Block Nested-Loop join算法，这样的SQL语句应当弃用； 在使用join时，应当让运行中数据量小的表作为驱动表。">
+<meta name="twitter:title" content="00| 前言：构建能力框架">
+<meta name="twitter:description" content="Java技术目前应用广泛，工作求职者众多，取得高薪报酬是码农自身水平的直接体现，这里将Java求职中需要掌握的内容分为以下3个部分。  1. 基础部分 技术岗位与面试流程 计算机基础 JVM原理 多线程 设计模式 数据结构与算法2. 应用部分 常用工具集 常用框架 缓存 队列 数据库3. 综合部分 系统架构设计 微服务架构 容器化   找工作面对的3个问题 如何准备简历？ 简历直接决定着求职者能">
 
 
 
@@ -125,7 +125,7 @@
 
   
   
-  <link rel="canonical" href="https://fcbhank.github.io/2019/05/12/Mysql34-Join-用法记录/">
+  <link rel="canonical" href="https://fcbhank.github.io/2019/03/27/00-构建能力框架/">
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>Mysql34--Join 用法记录 | 码上行动GO</title>
+  <title>00| 前言：构建能力框架 | 码上行动GO</title>
   
 
 
@@ -361,7 +361,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fcbhank.github.io/2019/05/12/Mysql34-Join-用法记录/">
+    <link itemprop="mainEntityOfPage" href="https://fcbhank.github.io/2019/03/27/00-构建能力框架/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hank">
@@ -378,7 +378,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mysql34--Join 用法记录
+          <h1 class="post-title" itemprop="name headline">00| 前言：构建能力框架
 
               
             
@@ -404,7 +404,7 @@
                 
               
 
-              <time title="创建时间：2019-05-12 16:12:02" itemprop="dateCreated datePublished" datetime="2019-05-12T16:12:02+08:00">2019-05-12</time>
+              <time title="创建时间：2019-03-27 19:45:51" itemprop="dateCreated datePublished" datetime="2019-03-27T19:45:51+08:00">2019-03-27</time>
             </span>
           
 
@@ -419,7 +419,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 13:14:24" itemprop="dateModified" datetime="2019-07-16T13:14:24+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-23 19:11:53" itemprop="dateModified" datetime="2019-07-23T19:11:53+08:00">2019-07-23</time>
               </span>
             
           
@@ -433,7 +433,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Mysql学习实录/" itemprop="url" rel="index"><span itemprop="name">Mysql学习实录</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JAVA知识点梳理/" itemprop="url" rel="index"><span itemprop="name">JAVA知识点梳理</span></a></span>
 
                 
                 
@@ -470,7 +470,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span title="本文字数">113</span>
+              <span title="本文字数">728</span>
             </span>
           
 
@@ -501,10 +501,45 @@
       
 
       
-        <ol>
-<li>如果可以使用被驱动表的索引，join要优于单表查询  ；</li>
-<li>不能使用被驱动表的索引，只能用Block Nested-Loop join算法，这样的SQL语句应当弃用；</li>
-<li>在使用join时，应当让运行中数据量小的表作为驱动表。</li>
+        <blockquote>
+<p>Java技术目前应用广泛，工作求职者众多，取得高薪报酬是码农自身水平的直接体现，这里将Java求职中需要掌握的内容分为以下3个部分。</p>
+</blockquote>
+<h3 id="1-基础部分"><a href="#1-基础部分" class="headerlink" title="1. 基础部分"></a>1. 基础部分</h3><ul>
+<li>技术岗位与面试流程</li>
+<li>计算机基础</li>
+<li>JVM原理</li>
+<li>多线程</li>
+<li>设计模式</li>
+<li>数据结构与算法<h3 id="2-应用部分"><a href="#2-应用部分" class="headerlink" title="2. 应用部分"></a>2. 应用部分</h3></li>
+<li>常用工具集</li>
+<li>常用框架</li>
+<li>缓存</li>
+<li>队列</li>
+<li>数据库<h3 id="3-综合部分"><a href="#3-综合部分" class="headerlink" title="3. 综合部分"></a>3. 综合部分</h3></li>
+<li>系统架构设计</li>
+<li>微服务架构</li>
+<li>容器化</li>
+</ul>
+<hr>
+<h3 id="找工作面对的3个问题"><a href="#找工作面对的3个问题" class="headerlink" title="找工作面对的3个问题"></a>找工作面对的3个问题</h3><ol>
+<li>如何准备简历？<blockquote>
+<p>简历直接决定着求职者能否获得面试机会，所以简历的重要性不言而喻！有数据显示80%的简历通不过初步筛查，原因有：<br>(1) 工作或项目经验描述不到位<br>(2) 不懂得如何包装技术特长<br>(3) 不占优的学历放在了最重要的位置<br>(4) 排版较乱，语言不精练</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>补充</strong>：不可进行不看岗位的盲目海投，要根据岗位要求及时调整简历；简历中工作年限，对口经验、学历、简历美观度都需要留意。</p>
+<ol start="2">
+<li>面试官会考什么问题？<blockquote>
+<p>公司所属行业和工作年限要求都对求职者有着不同的侧重点，现举例分析如下：<br>(1) 从公司所属行业来看<br>① 社交门户类，多考察大规模<strong>高并发</strong>场景的应用与<strong>架构能力</strong>；<br>② O2O类，多考察<strong>综合能力</strong>；<br>③ 互联网金融类，多考察<strong>逻辑能力</strong>与<strong>高可用</strong>、<strong>安全领域</strong>的经验。<br>(2) 从工作年限上来看<br>① 校招，考察基础知识和逻辑思维，以及培养潜力；<br>② 初中级工程师，考察知识的广度和基础知识的应用；<br>③ 高级或资深工程师，考察综合能力，如对基本原理的深入理解和对各种知识的灵活运用。</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>补充</strong>：针对面试官抛出的问题，回答时需要尽量发散扩展；建议在面试前对公司业务和岗位职责作针对性的准备，以提高面试成功率。</p>
+<ol start="3">
+<li>如何提升晋级？<blockquote>
+<p>技术的更新迭代速度快，学习要系统，需要先建立一套知识体系或思维框架，然后再丰富完善其中细节。</p>
+</blockquote>
+</li>
 </ol>
 
       
@@ -544,7 +579,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://fcbhank.github.io/2019/05/12/Mysql34-Join-用法记录/" title="Mysql34--Join 用法记录">https://fcbhank.github.io/2019/05/12/Mysql34-Join-用法记录/</a>
+    <a href="https://fcbhank.github.io/2019/03/27/00-构建能力框架/" title="00| 前言：构建能力框架">https://fcbhank.github.io/2019/03/27/00-构建能力框架/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -560,9 +595,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/Join/" rel="tag"># Join</a>
+            <a href="/tags/职业发展/" rel="tag"># 职业发展</a>
           
         </div>
       
@@ -575,18 +610,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/08/翻译-Github-Authorizing-OAuth-Apps/" rel="next" title="翻译| Github: Authorizing OAuth Apps">
-                <i class="fa fa-chevron-left"></i> 翻译| Github: Authorizing OAuth Apps
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/12/Mysql01-从SQL语句执行过程看mysql架构/" rel="prev" title="Mysql01| 从SQL语句执行过程看mysql架构">
-                Mysql01| 从SQL语句执行过程看mysql架构 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/28/01-职业未来发展/" rel="prev" title="01| 职业未来发展">
+                01| 职业未来发展 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -631,8 +662,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -715,7 +755,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -753,6 +795,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基础部分"><span class="nav-number">1.</span> <span class="nav-text">1. 基础部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-应用部分"><span class="nav-number">2.</span> <span class="nav-text">2. 应用部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-综合部分"><span class="nav-number">3.</span> <span class="nav-text">3. 综合部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找工作面对的3个问题"><span class="nav-number">4.</span> <span class="nav-text">找工作面对的3个问题</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
