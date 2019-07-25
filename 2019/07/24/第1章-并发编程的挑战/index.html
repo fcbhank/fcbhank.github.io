@@ -114,7 +114,7 @@
 <meta property="og:site_name" content="码上行动GO">
 <meta property="og:description" content="不是启动越多的线程，程序就能最大限度地并发执行。并发编程通常会受到上下文切换、死锁、硬件和软件资源等问题的影响。  上下文切换 单核cpu通过为每个线程分配cpu时间片来实现多线程，时间片时长通常为几十毫秒。 上下文切换会影响到多线程的执行速度。  问题： 并发执行的代码是不是肯定比串行执行的快？回答： 不一定，因为多线程的创建和切换上下文也有开销，所以在循环次数较少时，耗时效果并不理想。通常需">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-24T09:43:17.300Z">
+<meta property="og:updated_time" content="2019-07-25T08:55:14.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第1章| 并发编程的挑战">
 <meta name="twitter:description" content="不是启动越多的线程，程序就能最大限度地并发执行。并发编程通常会受到上下文切换、死锁、硬件和软件资源等问题的影响。  上下文切换 单核cpu通过为每个线程分配cpu时间片来实现多线程，时间片时长通常为几十毫秒。 上下文切换会影响到多线程的执行速度。  问题： 并发执行的代码是不是肯定比串行执行的快？回答： 不一定，因为多线程的创建和切换上下文也有开销，所以在循环次数较少时，耗时效果并不理想。通常需">
@@ -404,13 +404,23 @@
                 
               
 
-              <time title="创建时间：2019-07-24 17:41:24 / 修改时间：17:43:17" itemprop="dateCreated datePublished" datetime="2019-07-24T17:41:24+08:00">2019-07-24</time>
+              <time title="创建时间：2019-07-24 17:41:24" itemprop="dateCreated datePublished" datetime="2019-07-24T17:41:24+08:00">2019-07-24</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-25 16:55:14" itemprop="dateModified" datetime="2019-07-25T16:55:14+08:00">2019-07-25</time>
+              </span>
             
           
 
@@ -460,7 +470,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span title="本文字数">2.6k</span>
+              <span title="本文字数">2.5k</span>
             </span>
           
 
@@ -547,7 +557,7 @@
 </li>
 </ol>
 <ul>
-<li>提供了比synchronized更加高级的各种同步结构，包括CountDownLatch、CyclicBarrier、Semaphore等，可以实现更加丰富的多线程操作。比如利用Semaphore作为资源控制器，限制同时进行工作的线程数量。</li>
+<li>提供了几个非常有用的并发工具类，包括CountDownLatch、CyclicBarrier、Semaphore等，可以实现更加丰富的多线程操作。比如利用Semaphore作为资源控制器，限制同时进行工作的线程数量。</li>
 <li>各种线程安全的容器，比如最常见的ConcurrentHashMap、有序的ConcurrentSkipListMap，或者通过类似快照机制，实现线程安全的动态数组CopyOnWriteArrayList等。</li>
 <li>各种并发队列实现，如各种BlockingQueue实现，比较典型的ArrayBlockingQueue、SynchorousQueue或针对特定场景的PriorityBlockingQueue等。</li>
 <li>强大的Executor框架，可以创建各种不同类型的线程池，调度任务运行等。绝大部分情况下，不再需要自己从头实现线程池和任务调度器。</li>
