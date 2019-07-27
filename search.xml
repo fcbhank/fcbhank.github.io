@@ -3,7 +3,14 @@
   <entry>
     <title><![CDATA[Ubuntu18.04 Chrome和firefox浏览器中字体异常变粗？]]></title>
     <url>%2F2019%2F07%2F27%2FUbuntu18-04-Chrome%E5%92%8Cfirefox%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AD%97%E4%BD%93%E5%BC%82%E5%B8%B8%E5%8F%98%E7%B2%97%EF%BC%9F%2F</url>
-    <content type="text"><![CDATA[问题描述：在安装好Ubuntu18.04 LTS后，正常使用谷歌浏览器和火狐浏览器，在浏览其他网页时并没有发现有异常的地方，直到在网页中使用Markdown语法的加粗显示时，才发现此时加粗文字与其他文字效果相同，并不能显示出强调效果。 由于是利用hexo搭建的博客，所以一度怀疑是不是Markdown的加粗效果未生效，此时进到简书博客内容界面，发现了以前用Markdown语法的加粗效果也未显示(参见下图)，而且像是整体都有了加粗效果。这下回过头发现知乎、腾讯新闻、网易新闻等常见页面字体都像是黑体，所以加粗效果才会没有比较，显示不出来。 解决办法：通过搜索关键字Ubuntu18 Chrome 字体变粗后发现了，参考了一篇知乎文章——如何解决Chrome字体变粗的问题？，发现了页面中font-family属性。进而得知该属性规定元素的字体系列，可以把多个字体名称作为一个“回退”系统来保存。如果浏览器不支持第一个字体，则会尝试下一个。 由此开始查看简书博客中上图界面对应的font-family属性，情况如下： 再对应系统中已安装字体可以发现，Microsoft YaHei之前的字体都未安装，由font-family属性可知，这里直接采用微软雅黑作为了页面的字体展示样式，所以再用Markdown语法** **时，由于原本就是黑体，所以加粗了显示效果不明显或不显示。所以这里选择安装了Airal，PingFang SC等字体， Ubuntu18安装字体到/usr/share/fonts/ 下载获取要安装的字体文件，如.ttf或.ttc等 在/usr/share/fonts/目录下新建一个自定义文件夹 1sudo mkdir /usr/share/fonts/custom 将字体文件放入custom文件夹下，并修改custom文件夹权限 12sudo mv *.ttf /usr/share/fonts/custom/sudo chmod 744 -R /usr/share/fonts/custom/ 让字体文件生效 123sudo mkfontscale #创建可缩放字体索引文件sudo mkfontdir #在目录中给字体文件创建索引sudo fc-cache -fv #编译生成字体缓存文件 重启浏览器后再打开页面发现Markdown的加粗语法已经生效，如下图： 小结：通过这次的问题，简单地了解了css中font-family属性的作用]]></content>
+    <content type="text"><![CDATA[问题描述在安装好Ubuntu18.04 LTS后，正常使用谷歌浏览器和火狐浏览器，在浏览其他网页时并没有发现有异常的地方，直到在网页中使用Markdown语法的加粗显示时，才发现此时加粗文字与其他文字效果相同，并不能显示出强调效果。 由于是利用hexo搭建的博客，所以一度怀疑是不是Markdown的加粗效果未生效，此时进到简书博客内容界面，发现了以前用Markdown语法的加粗效果也未显示(参见下图)，而且像是整体都有了加粗效果。这下回过头发现知乎、腾讯新闻、网易新闻等常见页面字体都像是黑体，所以加粗效果才会没有比较，显示不出来。 解决办法通过搜索关键字Ubuntu18 Chrome 字体变粗后发现了，参考了一篇知乎文章——如何解决Chrome字体变粗的问题？，发现了页面中font-family属性。进而得知该属性规定元素的字体系列，可以把多个字体名称作为一个“回退”系统来保存。如果浏览器不支持第一个字体，则会尝试下一个。 由此开始查看简书博客中上图界面对应的font-family属性，情况如下： 再对应系统中已安装字体可以发现，Microsoft YaHei之前的字体都未安装，由font-family属性可知，这里直接采用微软雅黑作为了页面的字体展示样式，所以再用Markdown语法** **时，由于原本就是黑体，所以加粗了显示效果不明显或不显示。所以这里选择安装了Airal，PingFang SC等字体， Ubuntu18安装字体到/usr/share/fonts/ 下载获取要安装的字体文件，如.ttf或.ttc等 在/usr/share/fonts/目录下新建一个自定义文件夹 1sudo mkdir /usr/share/fonts/custom 将字体文件放入custom文件夹下，并修改custom文件夹权限 12sudo mv *.ttf /usr/share/fonts/custom/sudo chmod 744 -R /usr/share/fonts/custom/ 让字体文件生效 123sudo mkfontscale #创建可缩放字体索引文件sudo mkfontdir #在目录中给字体文件创建索引sudo fc-cache -fv #编译生成字体缓存文件 重启浏览器后再打开页面发现Markdown的加粗语法已经生效，如下图： 小结通过这次的问题，简单地了解了css中font-family属性的作用]]></content>
+      <categories>
+        <category>日常操作记录</category>
+      </categories>
+      <tags>
+        <tag>Chrome</tag>
+        <tag>font-family</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[第1章| 并发编程的挑战]]></title>
