@@ -106,16 +106,21 @@
 
 
 
-  <meta name="description" content="Keep Learning &amp; Recording!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="码上行动GO">
-<meta property="og:url" content="https://fcbhank.github.io/categories/Java并发编程的艺术/index.html">
+  <meta name="description" content="Java具有“一次编译，到处运行”的特性，而这与JVM(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的字节码，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。  volatile的应用 volatil">
+<meta name="keywords" content="volatile,synchronized">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第2章| Java并发机制的底层实现原理">
+<meta property="og:url" content="https://fcbhank.github.io/2019/07/29/第2章-Java并发机制的底层实现原理/index.html">
 <meta property="og:site_name" content="码上行动GO">
-<meta property="og:description" content="Keep Learning &amp; Recording!">
+<meta property="og:description" content="Java具有“一次编译，到处运行”的特性，而这与JVM(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的字节码，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。  volatile的应用 volatil">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:updated_time" content="2019-07-29T03:08:04.277Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="码上行动GO">
-<meta name="twitter:description" content="Keep Learning &amp; Recording!">
+<meta name="twitter:title" content="第2章| Java并发机制的底层实现原理">
+<meta name="twitter:description" content="Java具有“一次编译，到处运行”的特性，而这与JVM(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的字节码，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。  volatile的应用 volatil">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
 
 
 
@@ -123,7 +128,7 @@
 
   
   
-  <link rel="canonical" href="https://fcbhank.github.io/categories/Java并发编程的艺术/">
+  <link rel="canonical" href="https://fcbhank.github.io/2019/07/29/第2章-Java并发机制的底层实现原理/">
 
 
 
@@ -133,7 +138,7 @@
   };
 </script>
 
-  <title>分类: Java并发编程的艺术 | 码上行动GO</title>
+  <title>第2章| Java并发机制的底层实现原理 | 码上行动GO</title>
   
 
 
@@ -181,7 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -255,7 +260,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -337,106 +342,422 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Java并发编程的艺术<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
+    <div class="reading-progress-bar"></div>
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fcbhank.github.io/2019/07/29/第2章-Java并发机制的底层实现原理/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content="Keep Learning & Recording!">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码上行动GO">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/29/第2章-Java并发机制的底层实现原理/" itemprop="url">
-            
-              <span itemprop="name">第2章| Java并发机制的底层实现原理</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">第2章| Java并发机制的底层实现原理
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T11:04:26+08:00" content="2019-07-29">
-          07-29
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-29 11:04:26 / 修改时间：11:08:04" itemprop="dateCreated datePublished" datetime="2019-07-29T11:04:26+08:00">2019-07-29</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java并发编程的艺术/" itemprop="url" rel="index"><span itemprop="name">Java并发编程的艺术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span title="本文字数">3k</span>
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span title="阅读时长">3 分钟</span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/24/第1章-并发编程的挑战/" itemprop="url">
-            
-              <span itemprop="name">第1章| 并发编程的挑战</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-24T17:41:24+08:00" content="2019-07-24">
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <blockquote>
+<p>Java具有“一次编译，到处运行”的特性，而这与<strong>JVM</strong>(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的<strong>字节码</strong>，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。</p>
+</blockquote>
+<h3 id="volatile的应用"><a href="#volatile的应用" class="headerlink" title="volatile的应用"></a>volatile的应用</h3><ol>
+<li><p>volatile的定义<br>Java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排他锁单独获取这个变量。</p>
+</li>
+<li><p>volatile作用<br>volatile是轻量级的synchronized，在多处理器开发中保证了共享变量的“可见性”（即一个线程修改一个共享变量时，另外一个线程能读到这个修改的指）。由于使用volatile不会引起线程切换上下文和调度，所以某种程度上使用volatile会比用synchronized的成本低。</p>
+</li>
+<li><p>volatile实现原则<br>（1）<strong>Lock前缀指令会引起处理器缓存回写到内存</strong><br>（2）<strong>一个处理器的缓存回写到内存会导致其他处理器的缓存失效</strong></p>
+</li>
+<li><p>优化volatie方法———<strong>追加字节优化</strong><br>因为大多数处理器的L1、L2、L3缓存的高速缓存行是64字节，不支持部分填充缓存行。所以处理器会把不满足64字节的节点读入到一个高速缓存行，这样会导致当一个处理器要修改时，64字节的高速缓存行都会被锁定。又由于缓存的一致性协议，会导致此时其他所有处理器的缓存行失效，从而无法进行操作，所以这将及其影响性能。<br>但并不是盲目地每次都通过追加字节来优化volatie的使用，以下两种情况就不适用：<br>（1）<strong>少部分缓存行不是64字节宽度的处理器</strong>；<br>（2）<strong>不频繁地写共享变量</strong>：共享变量不被频繁写，意味着同时竞争的概率小，用锁的概率也就小。</p>
+</li>
+<li><p>扩展<br>（1）CPU的术语定义</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>对应英文名</th>
+<th>术语解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内存屏障</td>
+<td>memory barriers</td>
+<td>是一组处理器指令，用于实现对内存操作的顺序限制</td>
+</tr>
+<tr>
+<td>缓冲行</td>
+<td>cache line</td>
+<td>CPU告诉缓存中可以分配的最小存储单位。处理器填写缓存行时会加载整个缓存行，现代CPU需要执行几百次CPU指令</td>
+</tr>
+<tr>
+<td>原子操作</td>
+<td>atomic operation</td>
+<td>不可中断的一个或一系列操作</td>
+</tr>
+<tr>
+<td>缓存行填充</td>
+<td>cache line fill</td>
+<td>当处理器识别到从内存中读取操作数是可缓存的，处理器读取整个高速缓存行到适当的缓存（L1, L2, L3的或所有）</td>
+</tr>
+<tr>
+<td>缓存命中</td>
+<td>cache hit</td>
+<td>如果进行高速缓存行填充操作的内存位置仍然是下次处理器访问的地址时，处理器从缓存中读取操作数，而不是从内存中读取</td>
+</tr>
+<tr>
+<td>写命中</td>
+<td>write hit</td>
+<td>当处理器将操作数写回到一个内存缓存的区域时，它会首先检查这个缓存的内存地址是否在缓存行中，如果存在一个有效的缓存行，则处理器将这个操作数协会到缓存，而不是写到内存</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;（2）cpu、缓存、内存、硬盘的关系<br>逻辑上将内存+缓存称为“内存储空间”，将硬盘称为“外存储空间”。由于cpu无法直接读写硬盘存储的数据，所以需要内存作为二者之间的桥梁，而有由于内存的读写速度与cpu处理速度相差较大，因此引入了缓存的概念，来匹配cpu与内存之间速度的差异，相应地存在一级、二级、三级缓存。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;（3）缓存一致性协议<br>每个处理器通过<strong>嗅探</strong>（一般指嗅探器，可以窃听网络上流经的数据包）在总线上传播的数据来检查自己缓存的值是否过期，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改时，会重新从系统内存中读取数据到处理器缓存。</p>
+<h3 id="synchronized的实现原理与应用"><a href="#synchronized的实现原理与应用" class="headerlink" title="synchronized的实现原理与应用"></a>synchronized的实现原理与应用</h3><blockquote>
+<p>Java SE 1.6前synchronized被称为重量级锁，1.6版本后对某些情况进行了优化。该节主要介绍1.6版本后引入的<strong>偏向锁</strong>和<strong>轻量级锁</strong>，以及<strong>锁的存储结构和升级过程</strong>。</p>
+</blockquote>
+<p><strong>Java中锁存在的三种形式：</strong></p>
+<ol>
+<li>对于普通同步方法，锁是当前实例对象</li>
+<li>对于静态同步方法，锁是当前类的Class对象</li>
+<li>对于同步方法块，锁是Synchronized括号里配置的对象</li>
+</ol>
+<p><strong>JVM中Synchronized实现原理</strong><br>JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，代码块同步用monitorenter和monitorexit实现，尽管方法同步的实现用的是另一种方式，但也可以用这两条指令实现。</p>
+<p><strong>monitorenter和monitorexit</strong><br>monitorenter指令是在编译后插入到同步代码块开始的地方，monitorexit则是插入到方法结束处和异常处。JVM中一个monitorenter必与一个monitorexit相对应，而且每个对象都有一个monitor。运行到monitorenter指令时，会尝试获取当前对象对应的monitor所有权，即尝试获得对象的锁。</p>
+<h4 id="Java对象头"><a href="#Java对象头" class="headerlink" title="Java对象头"></a>Java对象头</h4><p>Java对象头里存储了synchronized用的锁，32位虚拟机中Java对象头的长度如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32/64bit</td>
+<td>Mark Word</td>
+<td>存储对象的hashCode或锁信息等</td>
+</tr>
+<tr>
+<td>32/64bit</td>
+<td>Class Metadata Address</td>
+<td>存储到对象类型数据的指针</td>
+</tr>
+<tr>
+<td>32/32bit</td>
+<td>Array length</td>
+<td>数组的长度（如果当前对象是数据）</td>
+</tr>
+</tbody></table>
+<h4 id="锁的升级与对比"><a href="#锁的升级与对比" class="headerlink" title="锁的升级与对比"></a>锁的升级与对比</h4><p>Java SE 1.6后锁有四种状态：</p>
+<ul>
+<li>无锁状态</li>
+<li>偏向锁状态</li>
+<li>轻量级锁状态</li>
+<li>重量级锁状态</li>
+</ul>
+<p>锁的状态会随着竞争情况依次由上到下升级，同时锁可以升级但不能降级，这种策略保证了获得锁和释放锁的效率。</p>
+<h5 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h5><p>研究发现大多数的锁总是由同一线程多次获得，所以为了降低线程获取锁的代价引入了偏向锁。</p>
+<p><img src="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png" alt="偏向锁初始化流程"></p>
+<p><strong>关闭偏向锁</strong><br>Java6/7中偏向锁默认是开启的，它在应用程序启动几秒后才激活，可通过JVM参数<code>-XX:BiasedLockingStartupDelay=0</code>来关闭延迟。如果可以确认所有的锁通常情况下处于竞争状态，就可以通过JVM参数关闭偏向锁:<code>-XX:-UseBiasedLocking=false</code></p>
+<h5 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h5><p><img src="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="轻量级锁及膨胀流程图"></p>
+<p><strong>锁的优缺点对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>锁</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>偏向锁</td>
+<td>加锁和解锁不需要额外的消耗，和执行非同步方法相比仅存在纳秒级的差距</td>
+<td>如果线程间存在锁竞争，会带来额外的锁撤销消耗</td>
+<td>适用于只有一个线程访问同步块场景</td>
+</tr>
+<tr>
+<td>轻量级锁</td>
+<td>竞争的线程不会阻塞，提高了程序的响应速度</td>
+<td>如果始终得不到锁竞争的线程，使用自旋会消耗CPU</td>
+<td>追求响应时间，同步块执行速度非常快</td>
+</tr>
+<tr>
+<td>重量级锁</td>
+<td>线程竞争不适用自旋</td>
+<td>线程阻塞，响应时间缓慢</td>
+<td>追求吞吐量，同步块执行速度较快</td>
+</tr>
+<tr>
+<td>### 原子操作的实现原理</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1. 通过总线锁保证原子性</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2. 通过缓存锁定保证原子性</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>两种不使用缓存锁定的情况</strong></p>
+<ul>
+<li>当操作的数据不能被缓存在处理器内部，或操作的数据跨多个缓存行(cache line)时，处理器会调用总线锁定；</li>
+<li>处理器不支持缓存锁定</li>
+</ul>
+<p><strong>CAS实现原子操作的三大问题</strong></p>
+<ol>
+<li>ABA问题</li>
+<li>循环时间长开销大</li>
+<li>只能保证一个共享变量的原子操作</li>
+</ol>
 
       
     </div>
 
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hank</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://fcbhank.github.io/2019/07/29/第2章-Java并发机制的底层实现原理/" title="第2章| Java并发机制的底层实现原理">https://fcbhank.github.io/2019/07/29/第2章-Java并发机制的底层实现原理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/volatile/" rel="tag"># volatile</a>
+          
+            <a href="/tags/synchronized/" rel="tag"># synchronized</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/27/Ubuntu18-04-Chrome和firefox浏览器中字体异常变粗？/" rel="next" title="Ubuntu18.04 Chrome和firefox浏览器中字体异常变粗？">
+                <i class="fa fa-chevron-left"></i> Ubuntu18.04 Chrome和firefox浏览器中字体异常变粗？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -456,8 +777,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -596,6 +926,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile的应用"><span class="nav-number">1.</span> <span class="nav-text">volatile的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized的实现原理与应用"><span class="nav-number">2.</span> <span class="nav-text">synchronized的实现原理与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java对象头"><span class="nav-number">2.1.</span> <span class="nav-text">Java对象头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#锁的升级与对比"><span class="nav-number">2.2.</span> <span class="nav-text">锁的升级与对比</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#偏向锁"><span class="nav-number">2.2.1.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#轻量级锁"><span class="nav-number">2.2.2.</span> <span class="nav-text">轻量级锁</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -804,6 +1151,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -817,6 +1168,8 @@
 
   
 
+
+  
 
 
   
