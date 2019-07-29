@@ -114,13 +114,13 @@
 <meta property="og:site_name" content="码上行动GO">
 <meta property="og:description" content="Java具有“一次编译，到处运行”的特性，而这与JVM(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的字节码，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。  volatile的应用 volatil">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
-<meta property="og:updated_time" content="2019-07-29T03:08:04.277Z">
+<meta property="og:image" content="https://github.com/fcbhank/MyOpenRepo/raw/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://github.com/fcbhank/MyOpenRepo/raw/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:updated_time" content="2019-07-29T04:04:08.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第2章| Java并发机制的底层实现原理">
 <meta name="twitter:description" content="Java具有“一次编译，到处运行”的特性，而这与JVM(Java Virtual Machine, Java虚拟机)密不可分。因为.java后缀的代码到最后运行，需要先经过编译器编译为.class后缀的字节码，接着字节码被类加载器加载到JVM中，最后转变为0-1的汇编指令才能被CPU执行等这一系列过程。本章的宗旨为深入底层了解Java并发机制的实现原理。  volatile的应用 volatil">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="https://github.com/fcbhank/MyOpenRepo/raw/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png">
 
 
 
@@ -407,7 +407,7 @@
                 
               
 
-              <time title="创建时间：2019-07-29 11:04:26 / 修改时间：11:08:04" itemprop="dateCreated datePublished" datetime="2019-07-29T11:04:26+08:00">2019-07-29</time>
+              <time title="创建时间：2019-07-29 11:04:26 / 修改时间：12:04:08" itemprop="dateCreated datePublished" datetime="2019-07-29T11:04:26+08:00">2019-07-29</time>
             </span>
           
 
@@ -595,9 +595,9 @@
 </ul>
 <p>锁的状态会随着竞争情况依次由上到下升级，同时锁可以升级但不能降级，这种策略保证了获得锁和释放锁的效率。</p>
 <h5 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h5><p>研究发现大多数的锁总是由同一线程多次获得，所以为了降低线程获取锁的代价引入了偏向锁。</p>
-<p><img src="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png" alt="偏向锁初始化流程"></p>
+<p><img src="https://github.com/fcbhank/MyOpenRepo/raw/master/images/%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E8%8E%B7%E5%BE%97%E5%92%8C%E6%92%A4%E9%94%80%E6%B5%81%E7%A8%8B.png" alt="偏向锁初始化流程"></p>
 <p><strong>关闭偏向锁</strong><br>Java6/7中偏向锁默认是开启的，它在应用程序启动几秒后才激活，可通过JVM参数<code>-XX:BiasedLockingStartupDelay=0</code>来关闭延迟。如果可以确认所有的锁通常情况下处于竞争状态，就可以通过JVM参数关闭偏向锁:<code>-XX:-UseBiasedLocking=false</code></p>
-<h5 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h5><p><img src="https://raw.githubusercontent.com/fcbhank/MyOpenRepo/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="轻量级锁及膨胀流程图"></p>
+<h5 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h5><p><img src="https://github.com/fcbhank/MyOpenRepo/raw/master/images/%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%8F%8A%E8%86%A8%E8%83%80%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="轻量级锁及膨胀流程图"></p>
 <p><strong>锁的优缺点对比</strong></p>
 <table>
 <thead>
@@ -735,6 +735,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/29/键盘操作Chrome神器——Vimium的使用技巧/" rel="prev" title="键盘操作Chrome神器——Vimium的使用技巧">
+                键盘操作Chrome神器——Vimium的使用技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -804,7 +808,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -890,7 +894,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -979,7 +983,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">30k</span>
+    <span title="站点总字数">32k</span>
   
 
   
@@ -988,7 +992,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">29 分钟</span>
   
 </div>
 
