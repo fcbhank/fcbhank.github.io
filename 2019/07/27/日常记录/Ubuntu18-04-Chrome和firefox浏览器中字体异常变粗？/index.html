@@ -526,13 +526,13 @@
 <li><p>下载获取要安装的字体文件，如.ttf或.ttc等</p>
 </li>
 <li><p>在/usr/share/fonts/目录下新建一个自定义文件夹</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir /usr/share/fonts/custom</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo mkdir /usr/share/fonts/custom</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>将字体文件放入custom文件夹下，并修改custom文件夹权限</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mv *.ttf /usr/share/fonts/custom/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo chmod 744 -R /usr/share/fonts/custom/</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo mv *.ttf /usr/share/fonts/custom/</span><br><span class="line"><span class="meta">$</span> sudo chmod 744 -R /usr/share/fonts/custom/</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>让字体文件生效</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkfontscale  <span class="comment">#创建可缩放字体索引文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mkfontdir    <span class="comment">#在目录中给字体文件创建索引</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo <span class="built_in">fc</span>-cache -fv <span class="comment">#编译生成字体缓存文件</span></span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> sudo mkfontscale  #创建可缩放字体索引文件</span><br><span class="line"><span class="meta">$</span> sudo mkfontdir    #在目录中给字体文件创建索引</span><br><span class="line"><span class="meta">$</span> sudo fc-cache -fv #编译生成字体缓存文件</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
