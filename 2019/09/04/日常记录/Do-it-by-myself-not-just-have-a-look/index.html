@@ -510,17 +510,17 @@
 </ul>
 <h2 id="订阅号文章"><a href="#订阅号文章" class="headerlink" title="订阅号文章"></a>订阅号文章</h2><h3 id="什么？Redis-的-QPS-是-MySQL-的-100-倍？"><a href="#什么？Redis-的-QPS-是-MySQL-的-100-倍？" class="headerlink" title="什么？Redis 的 QPS 是 MySQL 的 100 倍？"></a><a href="https://mp.weixin.qq.com/s?__biz=MzIyNzc1ODQ0MQ==&mid=2247484527&idx=1&sn=51fdb53443ca156225cb3589bc6e7df6&chksm=e85d1c69df2a957f6a734a152d43d4a8a487fb293e2a9ca0a9c6cc7364c0c6c8170fa898e789&mpshare=1&scene=1&srcid=&sharer_sharetime=1567601497239&sharer_shareid=01717087cb0d1e0fea4aaeb495af4bae#rd" target="_blank" rel="noopener">什么？Redis 的 QPS 是 MySQL 的 100 倍？</a></h3><h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><ol>
 <li><p>运行 Redis 自带的基准测试工具，运行 set，get 1000000 次，1s 后退出并显示数据</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 不使用 pipeline</span><br><span class="line"><span class="meta">$</span> redis-benchmark -n 1000000 -t set,get -q</span><br><span class="line"></span><br><span class="line">------输出结果------</span><br><span class="line">SET: 76022.50 requests per second</span><br><span class="line">GET: 69905.62 requests per second</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 不使用 pipeline</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> redis-benchmark -n 1000000 -t <span class="built_in">set</span>,get -q</span></span><br><span class="line"></span><br><span class="line">------输出结果------</span><br><span class="line">SET: 76022.50 requests per second</span><br><span class="line">GET: 69905.62 requests per second</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>运行 set，get 1000000 次，每次发送 200 个请求到服务端，1s 后退出并显示数据</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 使用 pipeline</span><br><span class="line"><span class="meta">$</span> redis-benchmark -n 1000000 -t set,get -P 200 -q</span><br><span class="line"></span><br><span class="line">------输出结果------</span><br><span class="line">SET: 987166.81 requests per second</span><br><span class="line">GET: 1182033.12 requests per second</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 pipeline</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> redis-benchmark -n 1000000 -t <span class="built_in">set</span>,get -P 200 -q</span></span><br><span class="line"></span><br><span class="line">------输出结果------</span><br><span class="line">SET: 987166.81 requests per second</span><br><span class="line">GET: 1182033.12 requests per second</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>总结：<strong>Redis</strong> 在本机上的 QPS 大概为 70000～1000000</p>
 </li>
 </ol>
 <h4 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h4><ol start="0">
 <li><p>前提：安装 sysbench</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash</span><br><span class="line"><span class="meta">$</span> sudo apt -y install sysbench</span><br></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt -y install sysbench</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建一个名为 benchmark 的 database，然后运行如下命令，准备数据-&gt;测试数据</p>
  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-user=root --mysql-password=root --mysql-db=benchmark --tables=10 --table-size=1000000 --events=100000000 --report-interval=10 --threads=4 --time=300 prepare</span><br><span class="line"></span><br><span class="line">sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-user=root --mysql-password=root --mysql-db=benchmark --tables=10 --table-size=1000000 --events=100000000 --report-interval=10 --threads=4 --time=300 run</span><br></pre></td></tr></table></figure>
@@ -1009,7 +1009,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">221k</span>
+    <span title="站点总字数">222k</span>
   
 
   
@@ -1018,7 +1018,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">3:21</span>
+    <span title="站点阅读时长">3:22</span>
   
 </div>
 
