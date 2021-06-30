@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="码上行动GO">
 <meta property="og:description" content="简介 With Java 8, Nashorn, a much improved javascript engine is introduced, to replace the existing Rhino. Nashorn provides 2 to 10 times better performance, as it directly compiles the code in memory a">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-03T09:43:09.246Z">
+<meta property="og:updated_time" content="2019-09-03T09:43:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新特性07| Nashorn JavaScript">
 <meta name="twitter:description" content="简介 With Java 8, Nashorn, a much improved javascript engine is introduced, to replace the existing Rhino. Nashorn provides 2 to 10 times better performance, as it directly compiles the code in memory a">
@@ -480,7 +480,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span title="本文字数">2.3k</span>
+              <span title="本文字数">2k</span>
             </span>
           
 
@@ -527,12 +527,12 @@
 </ol>
 <ul>
 <li>jjs demo.js（得保证demo.js里由对象的javascript代码）</li>
-<li>交互式编程，直接输入<code>jjs</code>命令即可进入，举例如下<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jjs</span><br><span class="line"><span class="meta">jjs&gt;</span> print('Hello jjs!');</span><br><span class="line">Hello jjs!</span><br></pre></td></tr></table></figure>
+<li>交互式编程，直接输入<code>jjs</code>命令即可进入，举例如下<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jjs</span></span><br><span class="line"><span class="meta">jjs&gt;</span><span class="bash"> <span class="built_in">print</span>(<span class="string">'Hello jjs!'</span>);</span></span><br><span class="line">Hello jjs!</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
 <h4 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h4><p><strong>代码示例</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> jjs -- a b c</span><br><span class="line"><span class="meta">jjs&gt;</span> print('letter: ' + arguments.join(" + "));</span><br><span class="line">letter: a + b + c</span><br><span class="line"><span class="meta">jjs&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jjs -- a b c</span></span><br><span class="line"><span class="meta">jjs&gt;</span><span class="bash"> <span class="built_in">print</span>(<span class="string">'letter: '</span> + arguments.join(<span class="string">" + "</span>));</span></span><br><span class="line">letter: a + b + c</span><br><span class="line"><span class="meta">jjs&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="Java中调用JavaScript"><a href="#Java中调用JavaScript" class="headerlink" title="Java中调用JavaScript"></a>Java中调用JavaScript</h3><p><strong>代码示例</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.script.ScriptEngine;</span><br><span class="line"><span class="keyword">import</span> javax.script.ScriptEngineManager;</span><br><span class="line"><span class="keyword">import</span> javax.script.ScriptException;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Java8Tester</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 初始化脚本引擎管理器</span></span><br><span class="line">        ScriptEngineManager scriptEngineManager = <span class="keyword">new</span> ScriptEngineManager();</span><br><span class="line">        <span class="comment">// 获取nashron引擎</span></span><br><span class="line">        ScriptEngine nashorn = scriptEngineManager.getEngineByName(<span class="string">"nashorn"</span>);</span><br><span class="line"></span><br><span class="line">        String name = <span class="string">"Runoob"</span>;</span><br><span class="line">        Integer result = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 执行指定的脚本</span></span><br><span class="line">            nashorn.eval(<span class="string">"print('"</span> + name + <span class="string">"')"</span>);</span><br><span class="line">            result = (Integer) nashorn.eval(<span class="string">"10 + 2"</span>);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ScriptException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"执行脚本错误: "</span> + e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Optional&lt;Integer&gt; str = Optional.ofNullable(result);</span><br><span class="line">        str.ifPresent(System.out::println);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1015,7 +1015,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">  <a href="https://beian.miit.gov.cn" rel="noopener" target="_blank">辽ICP备2020015186号 </a>&copy; 2019 – <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">  <a href="https://beian.miit.gov.cn" rel="noopener" target="_blank">辽ICP备2020015186号 </a>&copy; 2019 – <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -1027,7 +1027,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">222k</span>
+    <span title="站点总字数">188k</span>
   
 
   
@@ -1036,7 +1036,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">3:22</span>
+    <span title="站点阅读时长">2:51</span>
   
 </div>
 
